@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Linux Sysmon
+Comment=Transparent desktop system monitor overlay
+Exec=@EXEC@
+Icon=utilities-system-monitor
+Terminal=false
+Categories=System;Monitor;
