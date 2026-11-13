@@ -4,6 +4,7 @@
 #   ./install.sh --uninstall
 set -euo pipefail
 BIN="$HOME/.local/bin/sysmon"
+ICON="$HOME/.local/share/icons/hicolor/scalable/apps/sysmon.svg"
 APP="$HOME/.local/share/applications/sysmon.desktop"
 AUTO="$HOME/.config/autostart/sysmon.desktop"
 here="$(cd "$(dirname "$0")" && pwd)"
@@ -11,8 +12,8 @@ here="$(cd "$(dirname "$0")" && pwd)"
 [[ "$(uname -s)" == "Linux" ]] || { echo "Linux Sysmon only supports Linux." >&2; exit 1; }
 
 if [[ "${1:-}" == "--uninstall" ]]; then
-  rm -f "$BIN" "$APP" "$AUTO"
-  echo "Removed $BIN, $APP and $AUTO"; exit 0
+  rm -f "$BIN" "$ICON" "$APP" "$AUTO"
+  echo "Removed $BIN, $ICON, $APP and $AUTO"; exit 0
 fi
 
 autostart=0; extra=()
@@ -22,6 +23,9 @@ done
 
 mkdir -p "$(dirname "$BIN")" "$(dirname "$APP")"
 install -m 0755 "$here/sysmon.py" "$BIN"
+mkdir -p "$(dirname "$ICON")"
+install -m 0644 "$here/assets/sysmon.svg" "$ICON"
+gtk-update-icon-cache -f -t "$HOME/.local/share/icons/hicolor" >/dev/null 2>&1 || true
 exec_line="$BIN"
 for a in "${extra[@]+"${extra[@]}"}"; do exec_line+=" \"$a\""; done
 sed "s|@EXEC@|${exec_line//|/\\|}|" "$here/sysmon.desktop" > "$APP"

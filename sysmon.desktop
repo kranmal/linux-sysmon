@@ -3,6 +3,6 @@ Type=Application
 Name=Linux Sysmon
 Comment=Transparent desktop system monitor overlay
 Exec=@EXEC@
-Icon=utilities-system-monitor
+Icon=sysmon
 Terminal=false
 Categories=System;Monitor;
